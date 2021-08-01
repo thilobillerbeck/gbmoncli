@@ -1,0 +1,2 @@
+# Gigabyte G27Q
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2109", ATTRS{idProduct}=="8883", TAG+="uaccess"
