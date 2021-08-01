@@ -1,7 +1,11 @@
 [package]
-name = "monctl"
+name = "gbmoncli"
+description = "A CLI to control your Gigabyte monitor (currently only G27Q)"
 version = "0.1.0"
+readme = "README.md"
 edition = "2018"
+repository = "https://github.com/thilobillerbeck/gbmoncli"
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
