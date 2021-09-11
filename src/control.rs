@@ -1,4 +1,5 @@
 use core::time;
+use std::fmt::format;
 use std::result::Result;
 use std::{thread, time::Duration};
 use rusb::{DeviceHandle, UsbContext};
@@ -35,175 +36,99 @@ const CMD_QM_RIGHT: [u8; 2] = [0xe0, 0x34];
 const CMD_QM_LEFT: [u8; 2] = [0xe0, 0x35];
 
 pub fn set_brightness<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 100 {
-        write_value_control(handle, CMD_BRIGHTNESS, value)
-    } else {
-        Err("Brightness must be between 0 and 100".to_string())
-    }
+    set_value(handle, CMD_BRIGHTNESS, value, 100, "Brightness")
 }
 
 pub fn set_contrast<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 100 {
-        write_value_control(handle, CMD_CONTRAST, value)
-    } else {
-        Err("Contrast must be between 0 and 100".to_string())
-    }
+    set_value(handle, CMD_CONTRAST, value, 100, "Contrast")
 }
 
 pub fn set_sharpness<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 10 {
-        write_value_control(handle, CMD_SHARPNESS, value)
-    } else {
-        Err("Sharpness must be between 0 and 10".to_string())
-    }
+    set_value(handle, CMD_SHARPNESS, value, 10, "Sharpness")
 }
 
 pub fn set_freesync<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 1 {
-        write_value_control(handle, CMD_FREESYNC, value)
-    } else {
-        Err("Freesync must be between 0 and 1".to_string())
-    }
+    set_value(handle, CMD_FREESYNC, value, 1, "Freesync")
 }
 
 pub fn set_black_equalizer<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 20 {
-        write_value_control(handle, CMD_BLACK_EQUALIZER, value)
-    } else {
-        Err("Black Equalizer must be between 0 and 20".to_string())
-    }
+    set_value(handle, CMD_BLACK_EQUALIZER, value, 20, "Black Equalizer")
 }
 
 pub fn set_osd_transparency<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 4 {
-        write_value_control(handle, CMD_OSD_TRANSPARENCY, value)
-    } else {
-        Err("OSD transparency must be between 0 and 4".to_string())
-    }
+    set_value(handle, CMD_OSD_TRANSPARENCY, value, 4, "OSD transparency")
 }
 
 pub fn set_osd_time<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 6 {
-        write_value_control(handle, CMD_OSD_TIME, value)
-    } else {
-        Err("OSD display time must be between 0 and 6".to_string())
-    }
+    set_value(handle, CMD_OSD_TIME, value, 6, "OSD display time")
 }
 
 pub fn set_color_vibrance<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 20 {
-        write_value_control(handle, CMD_COLOR_VIBRANCE, value)
-    } else {
-        Err("Color Vibrance must be between 0 and 20".to_string())
-    }
+    set_value(handle, CMD_COLOR_VIBRANCE, value, 20, "Color Vibrance")
 }
 
 pub fn set_low_blue_light<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 10 {
-        write_value_control(handle, CMD_LOW_BLUE_LIGHT, value)
-    } else {
-        Err("Low Blue Light must be between 0 and 10".to_string())
-    }
+    set_value(handle, CMD_LOW_BLUE_LIGHT, value, 10, "Low Blue Light")
 }
 
 pub fn set_super_resolution<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 4 {
-        write_value_control(handle, CMD_SUPER_RESOLUTION, value)
-    } else {
-        Err("Super Resolution must be between 0 and 4".to_string())
-    }
+    set_value(handle, CMD_SUPER_RESOLUTION, value, 4, "Super Resolution")
 }
 
 pub fn set_gamma<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 5 {
-        write_value_control(handle, CMD_GAMMA, value)
-    } else {
-        Err("Gamma must be between 0 and 5".to_string())
-    }
+    set_value(handle, CMD_GAMMA, value, 5, "Gamma")
 }
 
 pub fn set_color_temperature<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 3 {
-        write_value_control(handle, CMD_COLOR_TEMPERATURE, value)
-    } else {
-        Err("Color Temperature must be between 0 and 3".to_string())
-    }
+    set_value(handle, CMD_COLOR_TEMPERATURE, value, 3, "Color Temperature")
 }
 
 pub fn set_overdrive<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 2 {
-        write_value_control(handle, CMD_OVERDRIVE, value)
-    } else {
-        Err("Overdrive must be between 0 and 2".to_string())
-    }
+    set_value(handle, CMD_OVERDRIVE, value, 2, "Overdrive")
 }
 
 pub fn set_red<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 100 {
-        write_value_control(handle, CMD_RED, value)
-    } else {
-        Err("Red must be between 0 and 2".to_string())
-    }
+    set_value(handle, CMD_RED, value, 100, "Red")
 }
 
 pub fn set_green<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 100 {
-        write_value_control(handle, CMD_GREEN, value)
-    } else {
-        Err("Green must be between 0 and 2".to_string())
-    }
+    set_value(handle, CMD_GREEN, value, 100, "Green")
 }
 
 pub fn set_blue<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 100 {
-        write_value_control(handle, CMD_BLUE, value)
-    } else {
-        Err("Blue must be between 0 and 2".to_string())
-    }
+    set_value(handle, CMD_BLUE, value, 100, "Blue")
 }
 
 pub fn set_input<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 2 {
-        write_value_control(handle, CMD_INPUT, value)
-    } else {
-        Err("Input be between 0 and 2".to_string())
-    }
+    set_value(handle, CMD_INPUT, value, 2, "Input")
 }
 
 pub fn set_qm_up<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 7 {
-        write_value_control(handle, CMD_QM_UP, value)
-    } else {
-        Err("Quick Menu Up must be between 0 and 7".to_string())
-    }
+    set_value(handle, CMD_QM_UP, value, 7, "Quick Menu Up")
 }
 
 pub fn set_qm_left<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 7 {
-        write_value_control(handle, CMD_QM_LEFT, value)
-    } else {
-        Err("Quick Menu Left must be between 0 and 7".to_string())
-    }
+    set_value(handle, CMD_QM_LEFT, value, 7, "Quick Menu Left")
 }
 
 pub fn set_qm_down<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 7 {
-        write_value_control(handle, CMD_QM_DOWN, value)
-    } else {
-        Err("Quick Menu Down must be between 0 and 7".to_string())
-    }
+    set_value(handle, CMD_QM_DOWN, value, 7, "Quick Menu Down")
 }
 
 pub fn set_qm_right<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
-    if value <= 7 {
-        write_value_control(handle, CMD_QM_RIGHT, value)
-    } else {
-        Err("Quick Menu Right must be between 0 and 7".to_string())
-    }
+    set_value(handle, CMD_QM_RIGHT, value, 7, "Quick Menu Right")
 }
 
 pub fn switch_profile<T: UsbContext>(handle: &mut DeviceHandle<T>, value: u8) -> Result<(), String> {
     write_value_control(handle, CMD_SWITCH_PROFILE, value)
+}
+
+fn set_value<T: UsbContext>(handle: &mut DeviceHandle<T>, cmd: [u8; 2], value: u8, max_value: u8, option_name: &str) -> Result<(), String> {
+    if value <= max_value {
+        write_value_control(handle, cmd, value)
+    } else {
+        Err(format!("{} must be between 0 and {}", option_name, max_value))
+    }
 }
 
 fn write_value_control<T: UsbContext>(handle: &mut DeviceHandle<T>, cmd: [u8; 2], value: u8) -> Result<(), String> {
