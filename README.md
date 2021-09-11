@@ -36,15 +36,31 @@ FLAGS:
 
 OPTIONS:
     -e, --black-equalizer <0-20>                                                     Change monitor black equalizer
+        --blue <0-100>
     -b, --brightness <0-100>                                                         Change monitor brightness
+    -t, --color-temperature <0-3>
+        --color-vibrance <0-20>
     -c, --contrast <0-100>                                                           Change monitor contrast
     -f, --freesync <true|false>                                                      Turn AMD Freesync on/off
+    -g, --gamma <0-5>
+        --green <0-100>
+    -i, --input <0-2>
+        --low-blue-light <0-10>
         --osd-time <0-6>
             Set the monitors OSD disappearing time (5 second increments)
 
         --osd-transparency <0-4>                                                     Set the monitors OSD transparency
+    -o, --overdrive <0-2>
+        --print <true|false>                                                         Print monitors values
     -p, --profile <standard|fps|rtsrpg|movie|reader|srgb|custom1|custom2|custom3>    Change the monitor profile
+        --qm-down <0-2>
+        --qm-left <0-2>
+        --qm-right <0-2>
+        --qm-up <0-2>
+        --red <0-100>
     -s, --sharpness <0-10>                                                           Change monitor sharpness
+        --super-resolution <0-4>
+
 ```
 
 Set monitor brightness to 100% and contrast to 50%

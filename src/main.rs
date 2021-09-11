@@ -13,7 +13,6 @@ const PID: u16 = 0x8883;
 #[structopt(
     name = "gbmoncli",
     about = "A CLI to control your Gigabyte G27Q monitor.",
-    after_help = "Can only execute one attribute at a time",
     author = "Thilo Billerbeck <thilo.billerbeck@officerent.de>"
 )]
 struct Opt {
