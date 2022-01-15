@@ -183,7 +183,7 @@ pub fn print_values<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<(), S
         color_vibrance: buffers.0[16],
         color_temperature: buffers.0[17],
         contrast: buffers.0[18],
-        sharpness: buffers.0[22],
+        sharpness: buffers.1[22],
         gamma: buffers.0[25],
         low_blue_light: buffers.1[10],
         super_resolution: buffers.1[11],
