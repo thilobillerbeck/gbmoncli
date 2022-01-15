@@ -1,8 +1,8 @@
 use core::time;
-use std::fmt::format;
 use std::result::Result;
 use std::{thread, time::Duration};
 use rusb::{DeviceHandle, UsbContext};
+use serde::{Deserialize, Serialize};
 
 // VALUE COMMAND ARGS
 const CMD_HEADER_REQUEST_TYPE: u8 = 0x40;
@@ -161,11 +161,37 @@ OSD TRANSPARENCY: 1 : 23
 // RGB NOT IN THESE TWO ARRAYS
 // INPUT EITHER
 */
+#[derive(Serialize, Deserialize)]
+struct Settings {
+    brightness: u8,
+    contrast: u8,
+    gamma: u8,
+    black_equalizer: u8,
+    color_vibrance: u8,
+    color_temperature: u8,
+    sharpness: u8,
+    low_blue_light: u8,
+    super_resolution: u8,
+    overdrive: u8,
+}
 
 pub fn print_values<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<(), String> {
     let buffers = read_values(handle)?;
 
-    println!("BRIGHTNESS: {}\nCONTRAST: {}\nGAMMA: {}", buffers.0[14], buffers.0[18], buffers.0[25]);
+    let settings = Settings {
+        brightness: buffers.0[14],
+        color_vibrance: buffers.0[16],
+        color_temperature: buffers.0[17],
+        contrast: buffers.0[18],
+        sharpness: buffers.0[22],
+        gamma: buffers.0[25],
+        low_blue_light: buffers.1[10],
+        super_resolution: buffers.1[11],
+        overdrive: buffers.1[12],
+        black_equalizer: buffers.0[13],
+    };
+
+    println!("{}", serde_json::to_string_pretty(&settings).unwrap());
 
     Ok(())
 }
