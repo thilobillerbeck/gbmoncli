@@ -1,5 +1,5 @@
-mod control;
-mod device;
+pub mod control;
+pub mod device;
 
 use std::result::Result;
 use rusb::{Context, DeviceHandle, UsbContext};
