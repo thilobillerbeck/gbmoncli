@@ -5,10 +5,6 @@ use std::result::Result;
 use rusb::{Context, DeviceHandle, UsbContext};
 use structopt::StructOpt;
 
-// GIGABYTE G27Q USB
-const VID: u16 = 0x2109;
-const PID: u16 = 0x8883;
-
 #[derive(StructOpt, Debug)]
 #[structopt(
     name = "gbmoncli",
@@ -89,9 +85,7 @@ struct Opt {
 fn main() -> Result<(), String> {
     let opt = Opt::from_args();
 
-    let mut context = Context::new().expect("Error creating context");
-    let (mut _device, mut handle) =
-        device::open_device(&mut context, VID, PID).expect("Failed to open USB device");    
+    let mut handle = device::init_handle();
 
     #[cfg(debug_assertions)]
     let bufbefore = control::read_values(&mut handle)?;

@@ -1,4 +1,8 @@
-use rusb::{Device, DeviceHandle, UsbContext};
+use rusb::{Context, Device, DeviceHandle, UsbContext};
+
+// GIGABYTE G27Q USB
+const VID: u16 = 0x2109;
+const PID: u16 = 0x8883;
 
 pub fn open_device<T: UsbContext>(
     context: &mut T,
@@ -26,4 +30,11 @@ pub fn open_device<T: UsbContext>(
         }
     }
     return None
+}
+
+pub fn init_handle() -> DeviceHandle<Context> {
+    let mut context = Context::new().expect("Error creating context");
+    let (mut _device, mut handle) =
+        open_device(&mut context, VID, PID).expect("Failed to open USB device");
+    handle
 }
