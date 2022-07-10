@@ -1,9 +1,7 @@
-mod control;
-mod device;
-
 use std::result::Result;
 use rusb::{Context, DeviceHandle, UsbContext};
 use structopt::StructOpt;
+use gbmoncli::{control, device};
 
 #[derive(StructOpt, Debug)]
 #[structopt(
