@@ -175,7 +175,7 @@ struct Settings {
     overdrive: u8,
 }
 
-pub fn print_values<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<(), String> {
+pub fn read_values_json<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<String, String> {
     let buffers = read_values(handle)?;
 
     let settings = Settings {
@@ -191,7 +191,11 @@ pub fn print_values<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<(), S
         black_equalizer: buffers.0[13],
     };
 
-    println!("{}", serde_json::to_string_pretty(&settings).unwrap());
+    Ok(serde_json::to_string_pretty(&settings).unwrap())
+}
+
+pub fn print_values<T: UsbContext>(handle: &mut DeviceHandle<T>) -> Result<(), String> {
+    println!("{}", read_values_json(handle).unwrap());
 
     Ok(())
 }
